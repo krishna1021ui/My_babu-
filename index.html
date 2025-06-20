@@ -3,116 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love You Messages</title>
-  <style>
-    body {
-      background: linear-gradient(to right, #ff9a9e, #fad0c4);
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-    }
-    .message {
-      font-size: 2em;
-      margin: 20px 0;
-      text-align: center;
-    }
-    .rainbow-text {
-      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-      -webkit-background-clip: text;
-      color: transparent;
-      animation: bounceIn 1s ease;
-    }
-    .neon-glow {
-      text-shadow: 0 0 5px #fff, 0 0 10px #f0f, 0 0 20px #f0f;
-      animation: rotateIn 1s ease;
-    }
-    .typewriter {
-      overflow: hidden;
-      border-right: .15em solid orange;
-      white-space: nowrap;
-      animation: typing 2s steps(30, end), blink-caret .75s step-end infinite;
-    }
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: orange; }
-    }
-    .slide-left {
-      transform: translateX(-100%);
-      animation: slideIn 1s forwards;
-    }
-    @keyframes slideIn {
-      to { transform: translateX(0); }
-    }
-    .flip-in {
-      animation: flipIn 1s ease;
-    }
-    @keyframes flipIn {
-      from { transform: rotateY(90deg); opacity: 0; }
-      to { transform: rotateY(0deg); opacity: 1; }
-    }
-    .scale-in {
-      transform: scale(0);
-      animation: scaleUp 1s forwards;
-    }
-    @keyframes scaleUp {
-      to { transform: scale(1); }
-    }
-    .vibrate {
-      animation: vibrate 0.3s infinite;
-    }
-    @keyframes vibrate {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
-    }
-    .dramatic {
-      animation: fadeInDownBig 1.5s ease;
-    }
-    @keyframes fadeInDownBig {
-      from { opacity: 0; transform: translateY(-100px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  <title>Love Puzzle for Wiffyy</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="message-container"></div>
-  <script>
-    const messages = [
-      { text: "Love you 1", animation: "rainbow-text" },
-      { text: "Love you 10", animation: "neon-glow" },
-      { text: "Love you 100", animation: "typewriter" },
-      { text: "Love you 1000", animation: "slide-left" },
-      { text: "Love you 10000", animation: "flip-in" },
-      { text: "Love you ♾️♾️", animation: "scale-in" },
-      { text: "Lobbbbbbhhhhhhh uuuuuuuhhhhhhhh wiiiiiiiiiiiifffffffffffyyyyyyyyyy", animation: "vibrate" },
-      { text: "Lobbbbbbhhhhhhh paaattttnnniiii ggggg 💖🧿", animation: "dramatic" }
-    ];
+  <div id="start-screen">
+    <h1>Hello wiffyy 💖</h1>
+    <button onclick="startGame()">Click to Begin</button>
+  </div>
 
-    function showMessages() {
-      const container = document.getElementById("message-container");
-      let delay = 0;
-      messages.forEach(({ text, animation }) => {
-        setTimeout(() => {
-          const msg = document.createElement("div");
-          msg.className = `message ${animation}`;
-          msg.textContent = text;
-          container.appendChild(msg);
-        }, delay);
-        delay += 2500;
-      });
-    }
+  <div id="puzzle-game" class="hidden">
+    <h2>Solve the Puzzle 😍</h2>
+    <div class="grid" id="memory-game">
+      <!-- Cards will be inserted here dynamically -->
+    </div>
+  </div>
 
-    showMessages();
-  </script>
+  <div id="congrats-screen" class="hidden">
+    <h2>Congratulations chudail 👸🏻</h2>
+    <button onclick="startLoveSequence()">Next</button>
+  </div>
+
+  <div id="love-sequence" class="hidden">
+    <div id="messages"></div>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="romantic.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="script.js"></script>
 </body>
 </html>
