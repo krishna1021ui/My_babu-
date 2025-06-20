@@ -1,90 +1,99 @@
-const cardsArray = ['❤️','💛','💚','💙','💜','🧡','🤎','🖤'];
-let gameGrid = [...cardsArray, ...cardsArray];
-let firstCard = '', secondCard = '';
-let lockBoard = false;
+
+const startScreen = document.getElementById('startScreen');
+const gameScreen = document.getElementById('gameScreen');
+const winScreen = document.getElementById('winScreen');
+const loveMessages = document.getElementById('loveMessages');
+
+const emojis = ["❤️", "💛", "💚", "💙", "💜", "🧡", "🤍", "🩷"];
+let cards = [...emojis, ...emojis]; cards = cards.slice(0, 25); // 25 cards for 5x5
+
+let flippedCards = [];
+let matchedCards = [];
 
 function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)];
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
-function startGame() {
-  document.getElementById('start-screen').classList.add('hidden');
-  document.getElementById('puzzle-game').classList.remove('hidden');
-  document.getElementById('bg-music').play();
-  loadCards();
-}
-
-function loadCards() {
-  gameGrid = shuffle(gameGrid);
-  const board = document.getElementById('memory-game');
-  board.innerHTML = '';
-  gameGrid.forEach(symbol => {
+function createBoard() {
+  gameScreen.innerHTML = "";
+  shuffle(cards).forEach((emoji, index) => {
     const card = document.createElement('div');
     card.classList.add('card');
-    card.dataset.symbol = symbol;
-    card.textContent = '?';
+    card.dataset.emoji = emoji;
+    card.dataset.index = index;
     card.addEventListener('click', flipCard);
-    board.appendChild(card);
+    gameScreen.appendChild(card);
   });
 }
 
-function flipCard() {
-  if (lockBoard || this.textContent !== '?') return;
-  this.textContent = this.dataset.symbol;
-  if (!firstCard) {
-    firstCard = this;
-    return;
-  }
-  secondCard = this;
-  lockBoard = true;
+function flipCard(e) {
+  const card = e.target;
+  if (flippedCards.length < 2 && !card.classList.contains('flipped') && !matchedCards.includes(card)) {
+    card.textContent = card.dataset.emoji;
+    card.classList.add('flipped');
+    flippedCards.push(card);
 
-  if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
-    firstCard = '';
-    secondCard = '';
-    lockBoard = false;
-    checkWin();
-  } else {
-    setTimeout(() => {
-      firstCard.textContent = '?';
-      secondCard.textContent = '?';
-      firstCard = '';
-      secondCard = '';
-      lockBoard = false;
-    }, 800);
-  }
-}
-
-function checkWin() {
-  const unmatched = [...document.querySelectorAll('.card')].filter(c => c.textContent === '?');
-  if (unmatched.length === 0) {
-    document.getElementById('puzzle-game').classList.add('hidden');
-    document.getElementById('congrats-screen').classList.remove('hidden');
-  }
-}
-
-function startLoveSequence() {
-  document.getElementById('congrats-screen').classList.add('hidden');
-  document.getElementById('love-sequence').classList.remove('hidden');
-  const messages = [
-    'Love you 1',
-    'Love you 10',
-    'Love you 100',
-    'Love you 1000',
-    'Love you 10000',
-    'Love you ♾️♾️',
-    'Lobbbbbbhhhhhhh uuuuuuuhhhhhhhh wiiiiiiiiiiiifffffffffffyyyyyyyyyy',
-    'Lobbbbbbhhhhhhh uuuuuuuhhhhhhhh paaattttnnniiii ggggg 💖🧿'
-  ];
-  let index = 0;
-  const display = document.getElementById('messages');
-  const interval = setInterval(() => {
-    if (index < messages.length) {
-      const div = document.createElement('div');
-      div.classList.add('animate');
-      div.textContent = messages[index++];
-      display.appendChild(div);
-    } else {
-      clearInterval(interval);
+    if (flippedCards.length === 2) {
+      setTimeout(checkMatch, 600);
     }
-  }, 1000);
+  }
+}
+
+function checkMatch() {
+  const [card1, card2] = flippedCards;
+  if (card1.dataset.emoji === card2.dataset.emoji) {
+    matchedCards.push(card1, card2);
+  } else {
+    card1.textContent = "";
+    card2.textContent = "";
+    card1.classList.remove('flipped');
+    card2.classList.remove('flipped');
+  }
+
+  flippedCards = [];
+
+  if (matchedCards.length === cards.length) {
+    setTimeout(() => {
+      gameScreen.classList.add('hidden');
+      winScreen.classList.remove('hidden');
+    }, 500);
+  }
+}
+
+startScreen.addEventListener('click', () => {
+  startScreen.classList.add('hidden');
+  gameScreen.classList.remove('hidden');
+  createBoard();
+});
+
+document.getElementById('nextButton').addEventListener('click', () => {
+  winScreen.classList.add('hidden');
+  loveMessages.classList.remove('hidden');
+  showLoveMessages();
+});
+
+const messages = [
+  "Love you 1",
+  "Love you 10",
+  "Love you 100",
+  "Love you 1000",
+  "Love you 10000",
+  "Love you ♾️♾️",
+  "Lobbbbbbhhhhhhh uuuuuuuhhhhhhhh wiiiiiiiiiiiifffffffffffyyyyyyyyyy",
+  "Lobbbbbbhhhhhhh uuuuuuuhhhhhhhh paaattttnnniiii ggggg 💖🧿"
+];
+
+function showLoveMessages() {
+  loveMessages.innerHTML = "";
+  messages.forEach((msg, index) => {
+    const div = document.createElement('div');
+    div.classList.add('love-message');
+    div.style.animationDelay = `${index * 1.5}s`;
+    div.textContent = msg;
+    loveMessages.appendChild(div);
+  });
 }

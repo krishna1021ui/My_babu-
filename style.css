@@ -1,59 +1,71 @@
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(to right, #ff9a9e, #fad0c4);
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100vh;
   overflow: hidden;
-  color: #fff;
+  flex-direction: column;
+}
+
+.container, .win-screen, .love-messages {
   text-align: center;
+}
+
+h1, h2 {
+  font-size: 2em;
+  margin: 20px;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 1em;
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: repeat(4, 60px);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.card {
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.3s;
+}
+
+.card.flipped {
+  background-color: pink;
 }
 
 .hidden {
   display: none;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  background: #ff69b4;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  color: white;
+.love-message {
+  font-size: 2em;
+  opacity: 0;
+  animation: fadeInUp 1s forwards;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 80px);
-  gap: 10px;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.card {
-  width: 80px;
-  height: 80px;
-  background: #fff;
-  font-size: 2rem;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.animate {
-  font-size: 2rem;
-  margin: 10px;
-  animation: bounce 1s ease infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0);}
-  50% { transform: translateY(-20px);}
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(50px); }
+  100% { opacity: 1; transform: translateY(0); }
 }

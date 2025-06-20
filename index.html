@@ -1,36 +1,25 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love Puzzle for Wiffyy</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Wiffyy Game</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div id="start-screen">
-    <h1>Hello wiffyy 💖</h1>
-    <button onclick="startGame()">Click to Begin</button>
+  <div class="container" id="startScreen">
+    <h1>Hello wiffyy 💖 (click to start)</h1>
   </div>
 
-  <div id="puzzle-game" class="hidden">
-    <h2>Solve the Puzzle 😍</h2>
-    <div class="grid" id="memory-game">
-      <!-- Cards will be inserted here dynamically -->
-    </div>
+  <div class="game-container hidden" id="gameScreen"></div>
+
+  <div class="win-screen hidden" id="winScreen">
+    <h2>🎉 Congratulations chudail 👸🏻 🎉</h2>
+    <button id="nextButton">Click me</button>
   </div>
 
-  <div id="congrats-screen" class="hidden">
-    <h2>Congratulations chudail 👸🏻</h2>
-    <button onclick="startLoveSequence()">Next</button>
-  </div>
-
-  <div id="love-sequence" class="hidden">
-    <div id="messages"></div>
-  </div>
-
-  <audio id="bg-music" loop>
-    <source src="romantic.mp3" type="audio/mpeg" />
-  </audio>
+  <div class="love-messages hidden" id="loveMessages"></div>
 
   <script src="script.js"></script>
 </body>
